@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipsky FSESC 6.7 Pro Setup Guide</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .guide-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .step {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        .step-number {
+            background: var(--secondary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .step-content {
+            padding-left: 55px;
+            display: none;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid var(--warning);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background: #e3f2fd;
+            border-color: var(--secondary);
+        }
+        
+        .option.selected {
+            background: #d1e7ff;
+            border-color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .result {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid var(--success);
+            display: none;
+        }
+        
+        .warning {
+            background: #fff8e1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid var(--warning);
+        }
+        
+        .danger {
+            background: #ffebee;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .checklist {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .checklist ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .checklist li.completed:before {
+            content: "✓";
+            color: var(--success);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-next {
+            background: var(--success);
+            margin-top: 15px;
+        }
+        
+        .btn-next:hover {
+            background: #219653;
+        }
+        
+        .btn-reset {
+            background: var(--accent);
+            margin-left: 10px;
+        }
+        
+        .btn-reset:hover {
+            background: #c0392b;
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .visible {
+            display: block;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .highlight {
+            background: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .step {
+                padding: 15px;
+            }
+            
+            .step-content {
+                padding-left: 0;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .step-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flipsky Mini FSESC 6.7 Pro Setup Guide</h1>
+            <p class="subtitle">Interactive Step-by-Step Configuration for Salvaged Motors</p>
+        </header>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Step 1 of 15</div>
+        </div>
+        
+        <div class="guide-container">
+            <!-- Step 1: Motor Assessment -->
+            <div class="step" id="step-1">
+                <div class="step-header" onclick="toggleStep(1)">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Motor Assessment</div>
+                </div>
+                <div class="step-content visible">
+                    <p>Let's identify your motor type first:</p>
+                    
+                    <div class="question">
+                        <strong>Question 1:</strong> Can you see the motor's internal components?
+                        <div class="options">
+                            <div class="option" onclick="selectOption(1, 'A', this)">A) Yes - I can see magnets on the inside wall (outrunner)</div>
+                            <div class="option" onclick="selectOption(1, 'B', this)">B) Yes - I can see a shaft going through the middle with windings around it (inrunner)</div>
+                            <div class="option" onclick="selectOption(1, 'C', this)">C) No - It's sealed or I'm not sure</div>
+                        </div>
+                        <div class="result" id="q1-result"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>Question 2:</strong> How many wires does the motor have?
+                        <div class="options">
+                            <div class="option" onclick="selectOption(2, 'A', this)">A) 3 wires (most likely BLDC)</div>
+                            <div class="option" onclick="selectOption(2, 'B', this)">B) 2 wires (likely brushed DC)</div>
+                            <div class="option" onclick="selectOption(2, 'C', this)">C) More than 3 wires</div>
+                        </div>
+                        <div class="result" id="q2-result"></div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>Question 3:</strong> What's the approximate size?
+                        <div class="options">
+                            <div class="option" onclick="selectOption(3, 'A', this)">A) Small (under 50mm diameter)</div>
+                            <div class="option" onclick="selectOption(3, 'B', this)">B) Medium (50-100mm)</div>
+                            <div class="option" onclick="selectOption(3, 'C', this)">C) Large (over 100mm)</div>
+                        </div>
+                        <div class="result" id="q3-result"></div>
+                    </div>
+                    
+                    <div class="result" id="motor-assessment-result">
+                        <h3>Assessment Result:</h3>
+                        <p>This is most likely a <span class="highlight">BLDC outrunner motor</span> - very common in small applications like fans, drones, or toys.</p>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(1)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Safety First -->
+            <div class="step" id="step-2">
+                <div class="step-header" onclick="toggleStep(2)">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Safety First - Current Limiting</div>
+                </div>
+                <div class="step-content">
+                    <div class="warning">
+                        <strong>⚠️ Safety Critical Information</strong>
+                        <p>Proper current limiting prevents motor and ESC damage!</p>
+                    </div>
+                    
+                    <h3>Safe Starting Assumptions:</h3>
+                    <ul>
+                        <li><span class="highlight">Battery Voltage:</span> 18V (as mentioned)</li>
+                        <li><span class="highlight">Safe Starting Current:</span> 10-15A maximum</li>
+                        <li><span class="highlight">FSESC 6.7 Pro Capacity:</span> Up to 45A, but salvaged motors may have unknown specifications</li>
+                    </ul>
+                    
+                    <div class="checklist">
+                        <h3>Set these in your mind:</h3>
+                        <ul>
+                            <li>Start with <span class="highlight">10A current limit</span></li>
+                            <li>Use <span class="highlight">20A as absolute maximum</span> for testing</li>
+                            <li>Always test with motor unloaded first</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(2)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Hardware Setup -->
+            <div class="step" id="step-3">
+                <div class="step-header" onclick="toggleStep(3)">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Hardware Setup</div>
+                </div>
+                <div class="step-content">
+                    <h3>Wiring Connections:</h3>
+                    
+                    <div class="checklist">
+                        <h4>1. Motor to ESC:</h4>
+                        <ul>
+                            <li>Connect the 3 motor wires to any 3 of the motor output terminals (order doesn't matter initially)</li>
+                            <li>The motor will spin the wrong direction if wires are in wrong order - easily fixed later</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>2. Battery to ESC:</h4>
+                        <ul>
+                            <li>Red wire to positive (+)</li>
+                            <li>Black wire to negative (-)</li>
+                            <li><span class="highlight">Important:</span> Ensure correct polarity!</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>3. USB to Computer:</h4>
+                        <ul>
+                            <li>Connect micro USB cable to the FSESC</li>
+                            <li>Windows should install drivers automatically</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(3)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Installing VESC Tool -->
+            <div class="step" id="step-4">
+                <div class="step-header" onclick="toggleStep(4)">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Installing VESC Tool</div>
+                </div>
+                <div class="step-content">
+                    <h3>Download and Install:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li>Go to <span class="highlight">vesc-project.com</span></li>
+                            <li>Download <span class="highlight">VESC Tool</span> for Windows</li>
+                            <li>Install with default settings</li>
+                            <li>Launch the program</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="warning">
+                        <strong>Tip:</strong> If you have antivirus software, you may need to allow the installation as VESC Tool is sometimes flagged as suspicious.
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(4)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 5: Connecting to FSESC -->
+            <div class="step" id="step-5">
+                <div class="step-header" onclick="toggleStep(5)">
+                    <div class="step-number">5</div>
+                    <div class="step-title">Connecting to Your FSESC</div>
+                </div>
+                <div class="step-content">
+                    <h3>Step-by-step Connection:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li><span class="highlight">Open VESC Tool</span></li>
+                            <li>Click <span class="highlight">"Connect"</span> button (top left)</li>
+                            <li>Select your connection type:
+                                <ul>
+                                    <li>Usually <span class="highlight">"USB"</span> for direct connection</li>
+                                    <li>Sometimes <span class="highlight">"UART"</span> if USB doesn't work</li>
+                                </ul>
+                            </li>
+                            <li>If multiple ports appear, try each one</li>
+                            <li><span class="highlight">Success indicator:</span> Connection status turns green and shows firmware version</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="danger">
+                        <h4>If connection fails:</h4>
+                        <ul>
+                            <li>Check USB cable</li>
+                            <li>Try different USB port</li>
+                            <li>Ensure drivers installed</li>
+                            <li>Check if device appears in Device Manager</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(5)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 6: Basic Motor Detection -->
+            <div class="step" id="step-6">
+                <div class="step-header" onclick="toggleStep(6)">
+                    <div class="step-number">6</div>
+                    <div class="step-title">Basic Motor Detection</div>
+                </div>
+                <div class="step-content">
+                    <h3>Auto Detection Process:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li>Click <span class="highlight">"Wizard"</span> in left sidebar</li>
+                            <li>Select <span class="highlight">"Setup Motor Parameters"</span></li>
+                            <li>Follow these steps carefully:</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>Motor Type Selection:</h4>
+                        <ul>
+                            <li>Choose <span class="highlight">"BLDC"</span> (not brushed)</li>
+                            <li>Select <span class="highlight">"Sensored"</span> only if you see Hall sensor wires</li>
+                            <li>Most likely choose <span class="highlight">"Sensorless"</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>Number of Poles:</h4>
+                        <ul>
+                            <li><span class="highlight">Common values:</span> 14, 22, or 28 poles</li>
+                            <li>If unsure, start with <span class="highlight">14</span> (very common for small motors)</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(6)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 7: Motor Configuration Wizard -->
+            <div class="step" id="step-7">
+                <div class="step-header" onclick="toggleStep(7)">
+                    <div class="step-number">7</div>
+                    <div class="step-title">Motor Configuration Wizard</div>
+                </div>
+                <div class="step-content">
+                    <h3>Detailed Wizard Steps:</h3>
+                    
+                    <div class="checklist">
+                        <h4>Step 1: Motor Parameters</h4>
+                        <ul>
+                            <li><span class="highlight">Motor Type:</span> BLDC, Sensorless</li>
+                            <li><span class="highlight">Number of Poles:</span> Start with 14</li>
+                            <li><span class="highlight">Gear Ratio:</span> 1:1 (unless you know otherwise)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>Step 2: Battery Settings</h4>
+                        <ul>
+                            <li><span class="highlight">Battery Cells:</span> 4-5 cells (for 18V system)</li>
+                            <li><span class="highlight">Battery Type:</span> Li-Ion or LiPo (most common)</li>
+                            <li><span class="highlight">Cut-off Voltage:</span> 3.0V per cell minimum</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>Step 3: Current Limits (CRITICAL)</h4>
+                        <ul>
+                            <li><span class="highlight">Motor Current Max:</span> 10A (start here!)</li>
+                            <li><span class="highlight">Battery Current Max:</span> 10A</li>
+                            <li><span class="highlight">Absolute Maximums:</span> Set to 20A for safety</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>Step 4: Voltage Limits</h4>
+                        <ul>
+                            <li><span class="highlight">Input Voltage Max:</span> 20V (slightly above your 18V battery)</li>
+                            <li>This protects against voltage spikes</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(7)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 8: Motor Detection Process -->
+            <div class="step" id="step-8">
+                <div class="step-header" onclick="toggleStep(8)">
+                    <div class="step-number">8</div>
+                    <div class="step-title">Motor Detection Process</div>
+                </div>
+                <div class="step-content">
+                    <h3>Running Motor Detection:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li><span class="highlight">Ensure motor is free to spin</span> (no load)</li>
+                            <li><span class="highlight">Remove propeller or load</span> for safety</li>
+                            <li>In Wizard, click <span class="highlight">"Detect Motor Parameters"</span></li>
+                            <li>The motor will make noise and spin briefly</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="danger">
+                        <h4>If it doesn't work:</h4>
+                        <ul>
+                            <li>Try swapping any two motor wires</li>
+                            <li>Check connections</li>
+                            <li>Try different pole count (14 → 22 → 28)</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(8)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 9: Testing Motor Direction -->
+            <div class="step" id="step-9">
+                <div class="step-header" onclick="toggleStep(9)">
+                    <div class="step-number">9</div>
+                    <div class="step-title">Testing Motor Direction</div>
+                </div>
+                <div class="step-content">
+                    <h3>Checking Rotation:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li>After successful detection, go to <span class="highlight">"Controls"</span> tab</li>
+                            <li>Set <span class="highlight">"Control Type"</span> to <span class="highlight">"PPM"</span> (for RC control) or <span class="highlight">"Nunchuk"</span> for testing</li>
+                            <li>Click <span class="highlight">"Apply"</span> and <span class="highlight">"Write"</span></li>
+                            <li><span class="highlight">Test carefully:</span>
+                                <ul>
+                                    <li>Use a small throttle input</li>
+                                    <li>Motor should spin smoothly</li>
+                                    <li>If spinning wrong direction, stop and proceed to next step</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>Fixing Direction:</h4>
+                        <ul>
+                            <li>Go to <span class="highlight">"Configuration" → "General"</span></li>
+                            <li>Find <span class="highlight">"Motor Direction"</span></li>
+                            <li>Change from <span class="highlight">"Forward"</span> to <span class="highlight">"Reverse"</span> (or vice versa)</li>
+                            <li><span class="highlight">OR</span> swap any two motor wires</li>
+                            <li>Test again</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(9)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 10: Fine-tuning Parameters -->
+            <div class="step" id="step-10">
+                <div class="step-header" onclick="toggleStep(10)">
+                    <div class="step-number">10</div>
+                    <div class="step-title">Fine-tuning Parameters</div>
+                </div>
+                <div class="step-content">
+                    <h3>Optimizing Performance:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li>Go to <span class="highlight">"Configuration" → "Motor"</span></li>
+                            <li><span class="highlight">Important Settings:</span>
+                                <ul>
+                                    <li><span class="highlight">Motor Current Max:</span> Keep at 10A initially</li>
+                                    <li><span class="highlight">Battery Current Max:</span> 10A</li>
+                                    <li><span class="highlight">RPM Max:</span> Set to reasonable limit (start with 50,000 RPM)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h4>Sensorless Settings:</h4>
+                        <ul>
+                            <li><span class="highlight">Switching Frequency:</span> 25,000 Hz (default)</li>
+                            <li><span class="highlight">Minimum ERPM:</span> 150 (good for small motors)</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(10)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 11: Testing Under Load -->
+            <div class="step" id="step-11">
+                <div class="step-header" onclick="toggleStep(11)">
+                    <div class="step-number">11</div>
+                    <div class="step-title">Testing Under Load</div>
+                </div>
+                <div class="step-content">
+                    <h3>Gradual Testing Process:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li><span class="highlight">Start unloaded:</span> Apply small throttle, listen for smooth operation</li>
+                            <li><span class="highlight">Increase gradually:</span> Work up to 50% throttle</li>
+                            <li><span class="highlight">Check temperature:</span> Feel motor after 1 minute - should be warm, not hot</li>
+                            <li><span class="highlight">Listen for noise:</span> Smooth hum is good, grinding/buzzing is bad</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="danger">
+                        <h4>If Motor is Rough or Noisy:</h4>
+                        <ul>
+                            <li>Go back to <span class="highlight">Wizard</span> and try different pole count</li>
+                            <li>Check <span class="highlight">"Motor Detection"</span> again</li>
+                            <li>Ensure proper wire connections</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(11)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 12: Saving Configuration -->
+            <div class="step" id="step-12">
+                <div class="step-header" onclick="toggleStep(12)">
+                    <div class="step-number">12</div>
+                    <div class="step-title">Saving Your Configuration</div>
+                </div>
+                <div class="step-content">
+                    <div class="warning">
+                        <strong>⚠️ Important - Save Your Work:</strong>
+                    </div>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li>Once everything works smoothly:</li>
+                            <li>Click <span class="highlight">"Configuration" → "Save Configuration"</span></li>
+                            <li>Click <span class="highlight">"Write App"</span> and <span class="highlight">"Write Motor"</span></li>
+                            <li>This saves settings to the ESC memory</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(12)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 13: Troubleshooting -->
+            <div class="step" id="step-13">
+                <div class="step-header" onclick="toggleStep(13)">
+                    <div class="step-number">13</div>
+                    <div class="step-title">Troubleshooting Common Issues</div>
+                </div>
+                <div class="step-content">
+                    <div class="danger">
+                        <h4>Problem: Motor won't spin at all</h4>
+                        <p><strong>Solutions:</strong></p>
+                        <ul>
+                            <li>Check all connections</li>
+                            <li>Try swapping motor wire positions</li>
+                            <li>Verify battery voltage (should be 16-18V)</li>
+                            <li>Run motor detection again</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="danger">
+                        <h4>Problem: Motor spins but roughly/vibrates</h4>
+                        <p><strong>Solutions:</strong></p>
+                        <ul>
+                            <li>Wrong pole count - try 14, 22, or 28</li>
+                            <li>Motor wires in wrong order - swap any two</li>
+                            <li>Current too high - reduce to 5A temporarily</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="danger">
+                        <h4>Problem: ESC gets very hot</h4>
+                        <p><strong>Solutions:</strong></p>
+                        <ul>
+                            <li>Reduce current limits immediately</li>
+                            <li>Check for short circuits</li>
+                            <li>Ensure proper ventilation</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(13)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 14: Advanced Safety Settings -->
+            <div class="step" id="step-14">
+                <div class="step-header" onclick="toggleStep(14)">
+                    <div class="step-number">14</div>
+                    <div class="step-title">Advanced Safety Settings</div>
+                </div>
+                <div class="step-content">
+                    <h3>Recommended Safety Limits:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li>Go to <span class="highlight">"Configuration" → "General"</span></li>
+                            <li>Set these safety values:
+                                <ul>
+                                    <li><span class="highlight">Battery Current Max:</span> 15A</li>
+                                    <li><span class="highlight">Motor Current Max:</span> 15A</li>
+                                    <li><span class="highlight">Temperature Limit:</span> 80°C</li>
+                                    <li><span class="highlight">Input Voltage Cutoff:</span> 15V minimum</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-next" onclick="nextStep(14)">Next Step</button>
+                </div>
+            </div>
+            
+            <!-- Step 15: Final Testing -->
+            <div class="step" id="step-15">
+                <div class="step-header" onclick="toggleStep(15)">
+                    <div class="step-number">15</div>
+                    <div class="step-title">Final Testing Checklist</div>
+                </div>
+                <div class="step-content">
+                    <h3>Before Full Operation:</h3>
+                    
+                    <div class="checklist">
+                        <ul>
+                            <li class="completed">Motor spins smoothly unloaded</li>
+                            <li class="completed">Direction is correct</li>
+                            <li class="completed">No unusual noises or vibrations</li>
+                            <li class="completed">ESC doesn't overheat (5 minutes test)</li>
+                            <li class="completed">Configuration is saved</li>
+                            <li class="completed">Current limits are appropriate for motor size</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h3>Quick Reference: Safe Starting Values</h3>
+                        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+                            <tr style="background: #f1f1f1;">
+                                <th style="border: 1px solid #ddd; padding: 10px;">Parameter</th>
+                                <th style="border: 1px solid #ddd; padding: 10px;">Safe Starting Value</th>
+                                <th style="border: 1px solid #ddd; padding: 10px;">Maximum for Testing</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Motor Current</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">10A</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">15A</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Battery Current</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">10A</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">15A</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Max RPM</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">50,000</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">100,000</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Battery Voltage</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">18V system</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">20V max</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Pole Count</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">14</td>
+                                <td style="border: 1px solid #ddd; padding: 10px;">Try 22, 28 if needed</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="danger">
+                        <h3>Emergency Stop Procedure</h3>
+                        <p>If anything goes wrong:</p>
+                        <ol>
+                            <li><span class="highlight">Immediately disconnect battery</span></li>
+                            <li>Do not touch hot components</li>
+                            <li>Wait for components to cool before troubleshooting</li>
+                            <li>Check connections before reconnecting</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="checklist">
+                        <h3>🎉 Congratulations!</h3>
+                        <p>You should now have a working motor controller setup. Start with conservative settings and gradually increase performance as you verify the motor can handle it safely.</p>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn" onclick="prevStep(15)">Previous Step</button>
+                        <button class="btn btn-reset" onclick="resetGuide()">Reset Guide</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Flipsky FSESC 6.7 Pro Interactive Setup Guide | Always prioritize safety when working with electrical components</p>
+        </footer>
+    </div>
+
+    <script>
+        // Current step tracking
+        let currentStep = 1;
+        const totalSteps = 15;
+        
+        // User selections
+        const selections = {
+            q1: null,
+            q2: null,
+            q3: null
+        };
+        
+        // Initialize the guide
+        window.onload = function() {
+            updateProgress();
+            showStep(1);
+        };
+        
+        // Toggle step content visibility
+        function toggleStep(stepNum) {
+            const content = document.querySelector(`#step-${stepNum} .step-content`);
+            content.classList.toggle('visible');
+        }
+        
+        // Show a specific step
+        function showStep(stepNum) {
+            // Hide all steps
+            document.querySelectorAll('.step').forEach(step => {
+                step.style.display = 'none';
+            });
+            
+            // Show current step
+            document.getElementById(`step-${stepNum}`).style.display = 'block';
+            
+            // Update current step
+            currentStep = stepNum;
+            
+            // Update progress
+            updateProgress();
+            
+            // Scroll to top of step
+            document.getElementById(`step-${stepNum}`).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Next step
+        function nextStep(current) {
+            if (current < totalSteps) {
+                showStep(current + 1);
+            }
+        }
+        
+        // Previous step
+        function prevStep(current) {
+            if (current > 1) {
+                showStep(current - 1);
+            }
+        }
+        
+        // Select option for questions
+        function selectOption(question, option, element) {
+            // Remove selected class from all options
+            element.parentElement.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Store selection
+            selections[`q${question}`] = option;
+            
+            // Show result based on selections
+            showAssessmentResult();
+        }
+        
+        // Show motor assessment result
+        function showAssessmentResult() {
+            if (selections.q1 && selections.q2 && selections.q3) {
+                const result = document.getElementById('motor-assessment-result');
+                result.style.display = 'block';
+                
+                // Show individual question results
+                document.getElementById('q1-result').innerHTML = `<p><strong>Your selection:</strong> ${getSelectionText(1, selections.q1)}</p>`;
+                document.getElementById('q1-result').style.display = 'block';
+                
+                document.getElementById('q2-result').innerHTML = `<p><strong>Your selection:</strong> ${getSelectionText(2, selections.q2)}</p>`;
+                document.getElementById('q2-result').style.display = 'block';
+                
+                document.getElementById('q3-result').innerHTML = `<p><strong>Your selection:</strong> ${getSelectionText(3, selections.q3)}</p>`;
+                document.getElementById('q3-result').style.display = 'block';
+            }
+        }
+        
+        // Get text for selection
+        function getSelectionText(question, option) {
+            const texts = {
+                1: {
+                    'A': 'Yes - I can see magnets on the inside wall (outrunner)',
+                    'B': 'Yes - I can see a shaft going through the middle with windings around it (inrunner)',
+                    'C': 'No - It\'s sealed or I\'m not sure'
+                },
+                2: {
+                    'A': '3 wires (most likely BLDC)',
+                    'B': '2 wires (likely brushed DC)',
+                    'C': 'More than 3 wires'
+                },
+                3: {
+                    'A': 'Small (under 50mm diameter)',
+                    'B': 'Medium (50-100mm)',
+                    'C': 'Large (over 100mm)'
+                }
+            };
+            
+            return texts[question][option];
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+            document.getElementById('progress-text').textContent = `Step ${currentStep} of ${totalSteps}`;
+        }
+        
+        // Reset the guide
+        function resetGuide() {
+            if (confirm('Are you sure you want to reset the guide? All progress will be lost.')) {
+                // Reset selections
+                selections.q1 = null;
+                selections.q2 = null;
+                selections.q3 = null;
+                
+                // Hide results
+                document.getElementById('motor-assessment-result').style.display = 'none';
+                document.getElementById('q1-result').style.display = 'none';
+                document.getElementById('q2-result').style.display = 'none';
+                document.getElementById('q3-result').style.display = 'none';
+                
+                // Remove selected classes
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Reset to first step
+                showStep(1);
+            }
+        }
+    </script>
+</body>
+</html>
